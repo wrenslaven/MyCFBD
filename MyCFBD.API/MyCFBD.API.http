@@ -1,0 +1,6 @@
+@MyCFBD.API_HostAddress = https://localhost:7069
+
+GET {MyCFBD.API_HostAddress}/weatherforecast/
+Accept: application/json
+
+###
