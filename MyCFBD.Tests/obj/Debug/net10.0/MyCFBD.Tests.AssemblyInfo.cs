@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyCFBD.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2325198edce5c3b9677374a735e55508379793d9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+68b33a4b0ff69e798bc49393a6cfaa8e3a25f17b")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyCFBD.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyCFBD.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

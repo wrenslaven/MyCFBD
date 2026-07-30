@@ -10,7 +10,7 @@ try
     HttpResponseMessage response = await client.GetAsync("teams");
     response.EnsureSuccessStatusCode();
     string jsonResponse = await response.Content.ReadAsStringAsync();
-    var teams = JsonSerializer.Deserialize<List<TeamData>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+    var teams = JsonSerializer.Deserialize<List<TeamData>>(jsonResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
     bool running = true;
     while (running)
     {
@@ -24,7 +24,7 @@ catch (HttpRequestException e)
 
 bool RunRequests(List<TeamData> teams){
     Console.WriteLine("What would you like to do? Type PrintAll, PrintByID, PrintByConference, PrintByState, DeleteByID, AddTeam, UpdateByID, or Stop to stop.");
-    string request = Console.ReadLine().ToUpper();
+    string request = Console.ReadLine()!.ToUpper();
     switch (request)
     {
         case "PRINTALL":
@@ -32,22 +32,22 @@ bool RunRequests(List<TeamData> teams){
             return true;
         case "PRINTBYID":
             Console.WriteLine("Enter the team's ID: ");
-            var id = Console.ReadLine();
+            var id = Console.ReadLine()!;
             PrintByID(teams, id);
             return true;
         case "PRINTBYCONFERENCE":
             Console.WriteLine("Enter the conference name: ");
-            var conference = Console.ReadLine();
+            var conference = Console.ReadLine()!;
             PrintByConference(teams, conference);
             return true;
         case "PRINTBYSTATE":
             Console.WriteLine("Enter the state name: ");
-            var state = Console.ReadLine();
+            var state = Console.ReadLine()!;
             PrintByState(teams, state);
             return true;
         case "DELETEBYID":
             Console.WriteLine("Enter the team's ID: ");
-            var delId = Console.ReadLine();
+            var delId = Console.ReadLine()!;
             DeleteByID(teams, delId);
             return true;
         case "ADDTEAM":
@@ -56,7 +56,7 @@ bool RunRequests(List<TeamData> teams){
             return true;
         case "UPDATEBYID":
             Console.WriteLine("Enter the team's ID: ");
-            var updateID = Console.ReadLine();
+            var updateID = Console.ReadLine()!;
             UpdateTeam(teams, updateID);
             return true;
         case "STOP":
@@ -165,13 +165,13 @@ async void AddTeam(List<TeamData> teams, int id)
 {
 
     Console.WriteLine("Enter the team name: ");
-    string teamName = Console.ReadLine();
+    string teamName = Console.ReadLine()!;
     Console.WriteLine("Enter the city: ");
-    string cityName = Console.ReadLine();
+    string cityName = Console.ReadLine()!;
     Console.WriteLine("Enter the state: ");
-    string stateName = Console.ReadLine();
+    string stateName = Console.ReadLine()!;
     Console.WriteLine("Enter the conference: ");
-    string conferenceName = Console.ReadLine();
+    string conferenceName = Console.ReadLine()!;
     TeamData newTeam = new TeamData()
     {
         TeamId = id,
@@ -180,9 +180,9 @@ async void AddTeam(List<TeamData> teams, int id)
         State = stateName,
         Conference = conferenceName
     };
-    teams.Add(newTeam);
+    teams.Add(newTeam); // Add it to local memory
 
-    HttpResponseMessage postResponse = await client.PostAsJsonAsync("teams", newTeam);
+    HttpResponseMessage postResponse = await client.PostAsJsonAsync("teams", newTeam); // Add it to external memory
     postResponse.EnsureSuccessStatusCode();
 
 }
@@ -195,12 +195,12 @@ async void UpdateTeam(List<TeamData> teams, string id)
         bool validField = false;
         while (!validField)
         {
-            string request = Console.ReadLine();
+            string request = Console.ReadLine()!;
             switch (request){
                 case "Name":
                     var foundForName = teams.FindAll(team => team.TeamId == IdInt);
                     Console.WriteLine("Enter the new team name: ");
-                    var newName = Console.ReadLine();
+                    var newName = Console.ReadLine()!;
                     foundForName[0].TeamName = newName;
                     HttpResponseMessage namePutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForName[0]);
                     namePutResponse.EnsureSuccessStatusCode();
@@ -209,7 +209,7 @@ async void UpdateTeam(List<TeamData> teams, string id)
                 case "City":
                     var foundForCity = teams.FindAll(team => team.TeamId == IdInt);
                     Console.WriteLine("Enter the new team city: ");
-                    var newCity = Console.ReadLine();
+                    var newCity = Console.ReadLine()!;
                     foundForCity[0].City = newCity;
 
                     HttpResponseMessage cityPutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForCity[0]);
@@ -219,7 +219,7 @@ async void UpdateTeam(List<TeamData> teams, string id)
                 case "State":
                     var foundForState = teams.FindAll(team => team.TeamId == IdInt);
                     Console.WriteLine("Enter the new team state: ");
-                    var newState = Console.ReadLine();
+                    var newState = Console.ReadLine()!;
                     foundForState[0].State = newState;
 
                     HttpResponseMessage statePutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForState[0]);
@@ -229,7 +229,7 @@ async void UpdateTeam(List<TeamData> teams, string id)
                 case "Conference":
                     var foundForConference = teams.FindAll(team => team.TeamId == IdInt);
                     Console.WriteLine("Enter the new team conference: ");
-                    var newConference = Console.ReadLine();
+                    var newConference = Console.ReadLine()!;
                     foundForConference[0].Conference = newConference;
 
                     HttpResponseMessage conferencePutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForConference[0]);
