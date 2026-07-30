@@ -12,3 +12,4 @@ C:\Users\wrens\Documents\Projects\MyCFBD\DataEntryApp\obj\Debug\net10.0\refint\D
 C:\Users\wrens\Documents\Projects\MyCFBD\DataEntryApp\obj\Debug\net10.0\DataEntryApp.pdb
 C:\Users\wrens\Documents\Projects\MyCFBD\DataEntryApp\obj\Debug\net10.0\DataEntryApp.genruntimeconfig.cache
 C:\Users\wrens\Documents\Projects\MyCFBD\DataEntryApp\obj\Debug\net10.0\ref\DataEntryApp.dll
+C:\Users\wrens\Documents\Projects\MyCFBD\DataEntryApp\obj\Debug\net10.0\DataEntryApp.sourcelink.json

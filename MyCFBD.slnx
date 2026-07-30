@@ -1,3 +1,5 @@
 <Solution>
   <Project Path="MyCFBD.API/MyCFBD.API.csproj" />
+  <Project Path="DataEntryApp/DataEntryApp.csproj" />
+  <Project Path="MyCFBD.Tests/MyCFBD.Tests.csproj" />
 </Solution>

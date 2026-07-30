@@ -9,6 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.16.16" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>UnitTest1.cs</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
 </Project>
