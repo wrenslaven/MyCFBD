@@ -24,10 +24,7 @@ public class UnitTests
 
     List<TeamData> emptyTestTeams = new List<TeamData>();
 
-    DataEntryProgram dataEntryProgram = new();
-    HttpClient testClient = new HttpClient();
     Services services = new(new HttpClient());
-    
 
     [Fact]
     public void PrintAll_ValidList_ReturnTrue()

@@ -13,7 +13,7 @@ try
     bool running = true;
     while (running)
     {
-        running = RunRequests(teams); // RunRequests() returns true for every request except Stop, so the user can continue entering requests until they'd like to stop.
+        running = await RunRequests(teams); // RunRequests() returns true for every request except Stop, so the user can continue entering requests until they'd like to stop.
     }
 }
 catch (HttpRequestException e)
@@ -62,7 +62,7 @@ async Task<bool> RunRequests(List<TeamData> teams){
             return false;
         default:
             Console.WriteLine("Please enter a valid request.");
-            RunRequests(teams);
+            await RunRequests(teams);
             return true;
     }
 }
