@@ -20,6 +20,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
 
-public partial class Program { } // Needed to expose this program to the other projects
+public partial class ApiProgram { } // Needed to expose this program to the other projects
 
 

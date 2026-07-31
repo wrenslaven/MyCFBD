@@ -21,7 +21,7 @@ catch (HttpRequestException e)
     Console.WriteLine($"Error: {e.Message}");
 }
 
-bool RunRequests(List<TeamData> teams){
+async Task<bool> RunRequests(List<TeamData> teams){
     Console.WriteLine("What would you like to do? Type PrintAll, PrintByID, PrintByConference, PrintByState, DeleteByID, AddTeam, UpdateByID, or Stop to stop.");
     string request = Console.ReadLine()!.ToUpper();
     switch (request)
@@ -47,7 +47,7 @@ bool RunRequests(List<TeamData> teams){
         case "DELETEBYID":
             Console.WriteLine("Enter the team's ID: ");
             var delId = Console.ReadLine()!;
-            servicesObj.DeleteByID(teams, delId);
+            await servicesObj.DeleteByID(teams, delId);
             return true;
         case "ADDTEAM":
             var newID = teams.Count() + 1;

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyCFBD.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6f02c9b61872e610aaaaf305ebf89afa1deb383")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+215a4c2e24ad0dca0337e4f83f2e856ead54a7ed")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyCFBD.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyCFBD.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
