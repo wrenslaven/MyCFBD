@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddSingleton<ITeamList, TeamList>();
+builder.Services.AddSingleton<ITeamList, TeamList>(); // The same for every request https://learn.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-10.0
 
 var app = builder.Build();
 
@@ -20,6 +20,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
 
-public partial class Program { }
+public partial class Program { } // Needed to expose this program to the other projects
 
 
