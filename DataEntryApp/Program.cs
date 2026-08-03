@@ -22,43 +22,43 @@ catch (HttpRequestException e)
 }
 
 async Task<bool> RunRequests(List<TeamData> teams){
-    Console.WriteLine("What would you like to do? Type PrintAll, PrintByID, PrintByConference, PrintByState, DeleteByID, AddTeam, UpdateByID, or Stop to stop.");
+    Console.WriteLine("\n\nWhat would you like to do?\n1. PrintAll\n2. PrintByID\n3. PrintByConference\n4. PrintByState\n5. DeleteByID\n6. AddTeam\n7. UpdateByID\n8. Stop");
     string request = Console.ReadLine()!.ToUpper();
     switch (request)
     {
-        case "PRINTALL":
+        case "1":
             servicesObj.PrintAll(teams);
             return true;
-        case "PRINTBYID":
+        case "2":
             Console.WriteLine("Enter the team's ID: ");
             var id = Console.ReadLine()!;
             servicesObj.PrintByID(teams, id);
             return true;
-        case "PRINTBYCONFERENCE":
+        case "3":
             Console.WriteLine("Enter the conference name: ");
             var conference = Console.ReadLine()!;
             servicesObj.PrintByConference(teams, conference);
             return true;
-        case "PRINTBYSTATE":
+        case "4":
             Console.WriteLine("Enter the state name: ");
             var state = Console.ReadLine()!;
             servicesObj.PrintByState(teams, state);
             return true;
-        case "DELETEBYID":
+        case "5":
             Console.WriteLine("Enter the team's ID: ");
             var delId = Console.ReadLine()!;
             await servicesObj.DeleteByID(teams, delId);
             return true;
-        case "ADDTEAM":
+        case "6":
             var newID = teams.Count() + 1;
             servicesObj.AddTeam(teams, newID);
             return true;
-        case "UPDATEBYID":
+        case "7":
             Console.WriteLine("Enter the team's ID: ");
             var updateID = Console.ReadLine()!;
             servicesObj.UpdateTeam(teams, updateID);
             return true;
-        case "STOP":
+        case "8":
             return false;
         default:
             Console.WriteLine("Please enter a valid request.");
@@ -74,7 +74,7 @@ public class Services(HttpClient client)
         foreach (TeamData team in teams)
         {
             Console.WriteLine(
-                $"Data for {team.TeamName} ({team.TeamId}):\nLocation: {team.City}, {team.State}\nConference: {team.Conference}"
+                $"Data for {team.TeamName} ({team.TeamId}):\nLocation: {team.City}, {team.State}\nConference: {team.Conference}\n"
             );
         }
         if (teams.Count == 0)
@@ -98,8 +98,8 @@ public class Services(HttpClient client)
             }
             if (found.Count == 0)
             {
-            Console.WriteLine("No teams found with that ID.");
-            return false;
+                Console.WriteLine("No teams found with that ID.");
+                return false;
             }
             
         }
@@ -117,7 +117,7 @@ public class Services(HttpClient client)
         foreach (TeamData foundTeam in found)
         {
             Console.WriteLine(
-                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}"
+                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}\n"
                     );
         }
         if (found.Count == 0)
@@ -134,7 +134,7 @@ public class Services(HttpClient client)
         foreach (TeamData foundTeam in found)
         {
             Console.WriteLine(
-                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}"
+                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}\n"
                     );
         }
         if (found.Count == 0)
@@ -199,15 +199,23 @@ public class Services(HttpClient client)
 
     public async void UpdateTeam(List<TeamData> teams, string id)
     {
-        if(int.TryParse(id, out int IdInt))
+        if(int.TryParse(id, out int IdInt)) // TO DO Check if the number is for a valid team, not just that it's a valid number
         {
+            var idExists = teams.FindAll(team => team.TeamId == IdInt);
+
+            if (idExists.Count == 0)
+            {
+                Console.WriteLine("No team with that ID was found.");
+                return;
+            }
+
             Console.WriteLine("What would you like to update? Enter Name, City, State, or Conference");
             bool validField = false;
             while (!validField)
             {
-                string request = Console.ReadLine()!;
+                string request = Console.ReadLine()!.ToUpper();
                 switch (request){
-                    case "Name":
+                    case "NAME":
                         var foundForName = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team name: ");
                         var newName = Console.ReadLine()!;
@@ -216,7 +224,7 @@ public class Services(HttpClient client)
                         namePutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "City":
+                    case "CITY":
                         var foundForCity = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team city: ");
                         var newCity = Console.ReadLine()!;
@@ -226,7 +234,7 @@ public class Services(HttpClient client)
                         cityPutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "State":
+                    case "STATE":
                         var foundForState = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team state: ");
                         var newState = Console.ReadLine()!;
@@ -236,7 +244,7 @@ public class Services(HttpClient client)
                         statePutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "Conference":
+                    case "CONFERENCE":
                         var foundForConference = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team conference: ");
                         var newConference = Console.ReadLine()!;
@@ -257,6 +265,11 @@ public class Services(HttpClient client)
         {
             Console.WriteLine("Please enter a valid number.");
         }
+    }
+
+    public void ClearLastLine()
+    {
+        Console.Clear();
     }
 }
 
