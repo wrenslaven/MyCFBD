@@ -74,7 +74,7 @@ public class Services(HttpClient client)
         foreach (TeamData team in teams)
         {
             Console.WriteLine(
-                $"Data for {team.TeamName} ({team.TeamId}):\nLocation: {team.City}, {team.State}\nConference: {team.Conference}\n"
+                $"Data for {team.TeamName} ({team.TeamId}):\nLocation: {team.City}, {team.State}\nConference: {team.Conference}\nCoach: {team.CoachData.CoachName} (Year {team.CoachData.CoachYearAtSchool}, {team.CoachData.CoachTotalYears} years total), {team.CoachData.CoachWins}-{team.CoachData.CoachLosses}"
             );
         }
         if (teams.Count == 0)
@@ -93,7 +93,7 @@ public class Services(HttpClient client)
             foreach (TeamData foundTeam in found)
             {
                 Console.WriteLine(
-                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}"
+                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}\nCoach: {foundTeam.CoachData.CoachName} (Year {foundTeam.CoachData.CoachYearAtSchool}, {foundTeam.CoachData.CoachTotalYears} years total), {foundTeam.CoachData.CoachWins}-{foundTeam.CoachData.CoachLosses}"
                     );
             }
             if (found.Count == 0)
@@ -117,7 +117,7 @@ public class Services(HttpClient client)
         foreach (TeamData foundTeam in found)
         {
             Console.WriteLine(
-                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}\n"
+                    $"Data for {foundTeam.TeamName} ({foundTeam.TeamId}):\nLocation: {foundTeam.City}, {foundTeam.State}\nConference: {foundTeam.Conference}\nCoach: {foundTeam.CoachData.CoachName} (Year {foundTeam.CoachData.CoachYearAtSchool}, {foundTeam.CoachData.CoachTotalYears} years total), {foundTeam.CoachData.CoachWins}-{foundTeam.CoachData.CoachLosses}"
                     );
         }
         if (found.Count == 0)
@@ -182,13 +182,33 @@ public class Services(HttpClient client)
         string stateName = Console.ReadLine()!;
         Console.WriteLine("Enter the conference: ");
         string conferenceName = Console.ReadLine()!;
+        Console.WriteLine("Enter the coach's name: ");
+        string coachName = Console.ReadLine()!;
+        Console.WriteLine("Enter the coach's year at school: ");
+        int coachYearAtSchool = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Enter the coach's total years: ");
+        int coachTotalYears = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Enter the coach's wins: ");
+        int coachWins = int.Parse(Console.ReadLine()!);
+        Console.WriteLine("Enter the coach's losses: ");
+        int coachLosses = int.Parse(Console.ReadLine()!);
+        CoachData newCoach = new CoachData()
+        {
+            CoachName = coachName,
+            CoachYearAtSchool = coachYearAtSchool,
+            CoachTotalYears = coachTotalYears,
+            CoachWins = coachWins,
+            CoachLosses = coachLosses
+        };
+
         TeamData newTeam = new TeamData()
         {
             TeamId = id,
             TeamName = teamName,
             City = cityName,
             State = stateName,
-            Conference = conferenceName
+            Conference = conferenceName,
+            CoachData = newCoach
         };
         teams.Add(newTeam); // Add it to local memory
 
@@ -209,13 +229,13 @@ public class Services(HttpClient client)
                 return;
             }
 
-            Console.WriteLine("What would you like to update? Enter Name, City, State, or Conference");
+            Console.WriteLine("What would you like to update?\n1. Name\n2. City\n3. State\n4. Conference\n5. Coach Data");
             bool validField = false;
             while (!validField)
             {
                 string request = Console.ReadLine()!.ToUpper();
                 switch (request){
-                    case "NAME":
+                    case "1":
                         var foundForName = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team name: ");
                         var newName = Console.ReadLine()!;
@@ -224,7 +244,7 @@ public class Services(HttpClient client)
                         namePutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "CITY":
+                    case "2":
                         var foundForCity = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team city: ");
                         var newCity = Console.ReadLine()!;
@@ -234,7 +254,7 @@ public class Services(HttpClient client)
                         cityPutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "STATE":
+                    case "3":
                         var foundForState = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team state: ");
                         var newState = Console.ReadLine()!;
@@ -244,7 +264,7 @@ public class Services(HttpClient client)
                         statePutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
-                    case "CONFERENCE":
+                    case "4":
                         var foundForConference = teams.FindAll(team => team.TeamId == IdInt);
                         Console.WriteLine("Enter the new team conference: ");
                         var newConference = Console.ReadLine()!;
@@ -252,6 +272,34 @@ public class Services(HttpClient client)
 
                         HttpResponseMessage conferencePutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForConference[0]);
                         conferencePutResponse.EnsureSuccessStatusCode();
+                        validField = true;
+                        break;
+                    case "5":
+                        var foundForCoach = teams.FindAll(team => team.TeamId == IdInt);
+                        Console.WriteLine("Enter the coach's name: ");
+                        string coachName = Console.ReadLine()!;
+                        Console.WriteLine("Enter the coach's year at school: ");
+                        int coachYearAtSchool = int.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Enter the coach's total years: ");
+                        int coachTotalYears = int.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Enter the coach's wins: ");
+                        int coachWins = int.Parse(Console.ReadLine()!);
+                        Console.WriteLine("Enter the coach's losses: ");
+                        int coachLosses = int.Parse(Console.ReadLine()!);
+
+                        CoachData updatedCoach = new CoachData()
+                        {
+                            CoachName = coachName,
+                            CoachYearAtSchool = coachYearAtSchool,
+                            CoachTotalYears = coachTotalYears,
+                            CoachWins = coachWins,
+                            CoachLosses = coachLosses
+                        };
+
+                        foundForCoach[0].CoachData = updatedCoach;
+
+                        HttpResponseMessage coachPutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForCoach[0]);
+                        coachPutResponse.EnsureSuccessStatusCode();
                         validField = true;
                         break;
                     default:
@@ -282,6 +330,17 @@ public class TeamData
     public string City { get; set; } = string.Empty;
     public string State { get; set; } = string.Empty;
     public string Conference { get; set; } = string.Empty;
+    public CoachData CoachData { get; set; } = new CoachData();
 }
+
+public class CoachData
+{
+    public int CoachLosses { get; set; }
+    public int CoachWins { get; set; }
+    public string CoachName { get; set; } = string.Empty;
+    public int CoachTotalYears { get; set; }
+    public int CoachYearAtSchool { get; set; }
+}
+
 
 public partial class DataEntryProgram { };
