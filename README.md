@@ -1,4 +1,4 @@
-MyCFBD is a college football data entry app. My grandfather was incredibly passionate about college football, and would spend the whole season manually writing data from every game on printed-out spreadsheets for his records. There are existing college football databases, but many don't include historical betting data, and many have paywall-locked features. Since I already have all the data for over a decade, I made this app to streamline the data entry process so I can build by own database for data analysis and visualization instead of paying for access to someone else's data.
+MyCFBD is a college football data entry app. My grandfather was incredibly passionate about college football, and would spend the whole season manually writing data from every game on printed-out spreadsheets for his records. There are existing college football databases, but many don't include historical betting data, and many have paywall-locked features. Since I already have all the data for over a decade, I made this app to streamline the data entry process so I can build my own database for data analysis and visualization instead of paying for access to someone else's data.
 
 To build and run the application:
 1. In a terminal or GitBash, navigate to the project's root directory and run <b>dotnet build</b>.
@@ -13,4 +13,4 @@ I came into this course with a lot of experience in Python and GDScript (which i
 
 <i>What I'd have done differently</i>
 
-If I had more time, I would have added two main things: A way to add game results for teams instead of just basic team data, and after that more ways to sort the data (for example, sorting by teams that covered the spread the most often). Ultimately, though, I think the best approach is to use this app strictly for data entry and do the actual analysis/visualization in Python with Pandas/Matplotlib like I tend to.
+If I had more time, I would have added two main things: A way to add game results for teams instead of just basic team and coach data, and after that more ways to sort the data (for example, sorting by teams that covered the spread the most often). Ultimately, though, I think the best approach is to use this app strictly for data entry and do the actual analysis/visualization in Python with Pandas/Matplotlib like I tend to.
