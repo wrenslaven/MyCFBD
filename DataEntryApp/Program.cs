@@ -275,35 +275,48 @@ public class Services(HttpClient client)
                         validField = true;
                         break;
                     case "5":
-                        var foundForCoach = teams.FindAll(team => team.TeamId == IdInt);
-                        Console.WriteLine("Enter the coach's name: ");
-                        string coachName = Console.ReadLine()!;
-                        Console.WriteLine("Enter the coach's year at school: ");
-                        int coachYearAtSchool = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter the coach's total years: ");
-                        int coachTotalYears = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter the coach's wins: ");
-                        int coachWins = int.Parse(Console.ReadLine()!);
-                        Console.WriteLine("Enter the coach's losses: ");
-                        int coachLosses = int.Parse(Console.ReadLine()!);
-
-                        CoachData updatedCoach = new CoachData()
+                        bool validCoachData = false;
+                        while (!validCoachData)
                         {
-                            CoachName = coachName,
-                            CoachYearAtSchool = coachYearAtSchool,
-                            CoachTotalYears = coachTotalYears,
-                            CoachWins = coachWins,
-                            CoachLosses = coachLosses
-                        };
+                            var foundForCoach = teams.FindAll(team => team.TeamId == IdInt);
+                            Console.WriteLine("Enter the coach's name: ");
+                            string coachName = Console.ReadLine()!;
+                            Console.WriteLine("Enter the coach's year at school: ");
+                            int coachYearAtSchool = int.TryParse(Console.ReadLine()!, out int parsedCoachYearAtSchool) ? parsedCoachYearAtSchool : -1;
+                            Console.WriteLine("Enter the coach's total years: ");
+                            int coachTotalYears = int.TryParse(Console.ReadLine()!, out int parsedCoachTotalYears) ? parsedCoachTotalYears : -1;
+                            Console.WriteLine("Enter the coach's wins: ");
+                            int coachWins = int.TryParse(Console.ReadLine()!, out int parsedCoachWins) ? parsedCoachWins : -1;
+                            Console.WriteLine("Enter the coach's losses: ");
+                            int coachLosses = int.TryParse(Console.ReadLine()!, out int parsedCoachLosses) ? parsedCoachLosses : -1;
+                            
+                            
+                            if (coachYearAtSchool > -1 && coachTotalYears > -1 && coachWins > -1 && coachLosses > -1){
+                                 CoachData updatedCoach = new CoachData()
+                                {
+                                    CoachName = coachName,
+                                    CoachYearAtSchool = coachYearAtSchool,
+                                    CoachTotalYears = coachTotalYears,
+                                    CoachWins = coachWins,
+                                    CoachLosses = coachLosses
+                                };
 
-                        foundForCoach[0].CoachData = updatedCoach;
+                                foundForCoach[0].CoachData = updatedCoach;
 
-                        HttpResponseMessage coachPutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForCoach[0]);
-                        coachPutResponse.EnsureSuccessStatusCode();
+                                HttpResponseMessage coachPutResponse = await client.PutAsJsonAsync($"teams/{id}", foundForCoach[0]);
+                                coachPutResponse.EnsureSuccessStatusCode();
+                                validCoachData = true;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter valid numbers for the coach's year at school, total years, wins, and losses.");
+                            }
+                        }
                         validField = true;
                         break;
                     default:
-                        Console.WriteLine("Please enter a valid field.");
+                        Console.WriteLine("Please enter a valid choice.");
                         validField = false;
                         break;
                 }
